@@ -11,8 +11,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        blackTheme: '#333333',
-        whiteTheme: '#E0E0E0',
+        blackTheme: '#3A3A3A',
+        whiteTheme: '#A0A0A0',
+        blackBg: '#1E1E1E',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

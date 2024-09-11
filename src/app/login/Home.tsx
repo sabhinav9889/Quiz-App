@@ -1,10 +1,16 @@
 import { description } from "@/app/constant";
-import { Button } from "./button";
+import { Button } from "../../components/ui/button";
 import { appName } from "@/app/constant";
+import Nav from "../nav/Nav";
+import React, { useContext } from "react";
+import { messageData } from "../context";
 
 const Home = ()=>{
+    const context = useContext(messageData);
+    const { theme, setTheme } = context!;
     return(
-        <div className="">
+        <div className={`${theme?'bg-blackBg text-white':'bg-white text-black'} min-h-screen`}>
+         <Nav isLoginPage={true}/>
          <div className="w-full flex justify-center p-8">
             <h1 className="lg:text-5xl md:text-3xl">Welcome to {appName}</h1>
          </div>
@@ -14,7 +20,7 @@ const Home = ()=>{
             </div>
           </div>
           <div className="w-full flex justify-center mt-10">
-            <Button>Login in with Google</Button>
+            <Button variant={`${(theme)?"secondary":"default"}`}>Login in with Google</Button>
           </div>
         </div>
     )
