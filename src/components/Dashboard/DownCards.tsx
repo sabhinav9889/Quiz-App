@@ -42,9 +42,9 @@ export default function({data, theme}: Props){
         return Math.log2(word.value) * 5 + 16;
     }
     return(
-        <div className="flex justify-center w-full pl-8 pr-8 mt-2 cursor-pointer">
+        <div className="flex justify-center w-full pl-8 pr-8 mt-2">
                 <div className="md:flex justify-between w-full">
-                    <div className={`border mt-6 md:w-[47%] rounded-lg ${theme?'border-blackTheme':'border-whiteTheme'}`}>
+                    <div className={`border mt-6 md:w-[47%] rounded-lg ${theme?'border-blackTheme':'border-whiteTheme'} cursor-pointer`}>
                     <p className="text-xl lg:text-3xl pt-4 pl-4 font-bold">Hot Topics</p>
                     <p className='pl-4'>Click on a topic to start a quiz on it</p>
                     <WordCloud data={data} height={360} rotate={0} font={"Times"} padding={10} fontSize={fontSizeMapper}/>

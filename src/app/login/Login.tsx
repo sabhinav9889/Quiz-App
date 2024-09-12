@@ -1,13 +1,18 @@
+"use client"
 import { description } from "@/app/constant";
 import { Button } from "../../components/ui/button";
 import { appName } from "@/app/constant";
 import Nav from "../nav/Nav";
 import React, { useContext } from "react";
 import { messageData } from "../context";
+import {signIn} from 'next-auth/react';
 
 const Home = ()=>{
     const context = useContext(messageData);
     const { theme, setTheme } = context!;
+    const handleSubmit = ()=>{
+      signIn("google");
+    }
     return(
         <div className={`${theme?'bg-blackBg text-white':'bg-white text-black'} min-h-screen`}>
          <Nav isLoginPage={true}/>
@@ -20,7 +25,7 @@ const Home = ()=>{
             </div>
           </div>
           <div className="w-full flex justify-center mt-10">
-            <Button variant={`${(theme)?"secondary":"default"}`}>Login in with Google</Button>
+            <Button variant={`${(theme)?"secondary":"default"}`} onClick={()=>handleSubmit()}>Login in with Google</Button>
           </div>
         </div>
     )
