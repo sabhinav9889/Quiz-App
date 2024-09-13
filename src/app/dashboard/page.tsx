@@ -1,7 +1,10 @@
 import DashBoard from "./DashBoard";
-
-export default function DashBoardMain(){
+import {loginIsRequired} from "@/lib/nextAuth";
+export default async function DashBoardMain(){
+  await loginIsRequired();
   return(
-    <DashBoard/>
-  )
+    <>
+     <DashBoard/>
+    </>
+  ) 
 }

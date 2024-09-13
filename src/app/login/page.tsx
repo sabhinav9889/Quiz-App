@@ -4,7 +4,6 @@ import { authConfig } from "@/lib/nextAuth";
 import { redirect } from 'next/navigation';
 export default async function(){
     const session = await getServerSession(authConfig);
-    console.log("Session: ", session, authConfig);
     if(session){
         redirect('/dashboard');
     }
