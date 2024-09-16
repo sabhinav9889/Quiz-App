@@ -1,38 +1,37 @@
 "use client"
-import { useContext } from "react";
 import { messageData } from "../context";
-import QuizCard from "@/components/Dashboard/UpperCards";
 import History from "@/components/Dashboard/DownCards";
+import NewQuiz from "@/components/Dashboard/NewQuiz";
+import RecentQuiz from "@/components/Dashboard/RecentQuiz";
+import { useContext } from "react";
+import { useRouter } from "next/navigation";
+import {data} from '../constant';
+import  {setTheme1, toggleTheme} from '@/lib/theme';
 import Nav from "../nav/Nav";
 const Dashboard = ()=>{
     const {theme, setTheme} = useContext(messageData)!;
-    const lis:string[] = ["AI", "Machine Learning", "Python", "Promt", "AR/VR", "Visual", "DevOps", "TypeScript", "Airospace", "Datascience"];
-    const data = [
-        { text: 'Hey', value: 10 },
-        { text: 'lol', value: 100 },
-        { text: 'Hedsy', value: 130 },
-        { text: 'lowewel', value: 120 },
-        { text: 'firession', value: 100 },
-        { text: 'vool', value: 10 },
-        { text: 'ddsesk', value: 1 },
-        { text: 'very cool', value: 1001 },
-        { text: 'duck', value: 103 },
-        { text: 'Hedsy', value: 10300 },
-        { text: 'lowewel', value: 10100 },
-        { text: 'firession', value: 50 },
-        { text: 'vool', value: 70 },
-        { text: 'ddsesk', value: 177 },
-      ];
+    setTheme(localStorage.getItem('theme')=='dark'?true:false);
+    const router = useRouter();
       type Props = {
         formattedTopics: { text: string; value: number }[];
       };
-      
-  const fontSizeMapper = (word: { value: number }) => Math.log2(word.value) * 5 + 16;
+      const handleNewQuiz = ()=>{
+        router.push('/readyquiz');
+      }
     return(
         <div className={`${theme?'bg-blackBg text-white':'bg-white text-black'} min-h-screen w-full`}>
             <Nav isLoginPage={false}/>
-            <h1 className="text-xl lg:text-3xl mt-6 font-bold pl-8 pr-8">DashBoard</h1>
-            <QuizCard theme={theme}/>
+            <h1 className="text-xl lg:text-3xl mt-6 font-bold pl-8 pr-8">DashBoard</h1>    
+            <div className="flex justify-center w-full pl-8 pr-8">
+                    <div className="md:flex justify-between w-full">
+                      <div onClick={()=>handleNewQuiz()} className={`border mt-6 md:w-[47%] cursor-pointer h-32 font-bold  rounded-lg ${theme?'border-white hover:shadow-destructive':'border-black'} pt-4 pl-4 hover:shadow-lg`}>
+                        <NewQuiz theme={theme}/>
+                      </div>
+                      <div className={`border mt-6 md:w-[47%] h-32 cursor-pointer font-bold rounded-lg ${theme?'border-white hover:shadow-destructive':'border-black'} pt-4 pl-4 hover:shadow-lg`}>
+                        <RecentQuiz theme={theme}/>
+                      </div>
+                    </div>
+            </div>
             <History data={data} theme={theme} />
         </div>  
     )

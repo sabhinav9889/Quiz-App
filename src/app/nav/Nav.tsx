@@ -1,11 +1,12 @@
-import Logo from "@/components/Logo"
-import { useContext } from "react";
+import Logo from "@/components/Logo";
+import { useContext, useState } from "react";
 import { messageData } from "../../app/context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components/ui/button";
 import { signOut } from "next-auth/react";
 import { redirect } from "next/navigation";
+import  {setTheme1, toggleTheme} from '@/lib/theme';
 export default function({isLoginPage}:any){
     const {theme, setTheme} = useContext(messageData)!;
     const Logout = ()=>{
@@ -13,10 +14,11 @@ export default function({isLoginPage}:any){
         redirect('/login');
     }
     return(
-        <nav className={`flex border ${theme?'border-blackTheme':'border-whiteTheme'} h-14`}>   
+        <>
+         <nav className={`flex h-14`}>   
             <Logo theme={theme}/>
             <div className="mt-3 h-6">
-                <div className={`absolute  md:right-28 right-36 w-16 h-7 rounded-full border flex ${(theme)?'bg-black border-whiteTheme ':'bg-white border-blackTheme'} cursor-pointer`} onClick={()=>setTheme((prev)=>(prev)?false:true)}>
+                <div className={`absolute  md:right-28 right-36 w-16 h-7 rounded-full border flex ${(theme)?'bg-black border-whiteTheme ':'bg-white border-blackTheme'} cursor-pointer`} onClick={()=>{setTheme((prev)=>(prev)?false:true); toggleTheme();}}>
                     {(!theme)&&<FontAwesomeIcon icon={faMoon} className="mt-0.5 ml-2 text-black text-lg"/>}
                     <div className={`rounded-full mt-0.5 w-5 h-5 ${(!theme)?'translate-x-4 bg-black':'translate-x-1 bg-white'} duration-300 ease-in-out`}>
                     </div>
@@ -27,5 +29,7 @@ export default function({isLoginPage}:any){
                 P
             </div>}
         </nav>
+        <hr className="" />
+        </>
     )
 }

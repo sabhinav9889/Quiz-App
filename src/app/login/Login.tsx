@@ -1,15 +1,16 @@
 "use client"
 import { description } from "@/app/constant";
 import { Button } from "../../components/ui/button";
+import { useContext } from "react";
 import { appName } from "@/app/constant";
 import Nav from "../nav/Nav";
-import React, { useContext } from "react";
+import React from "react";
 import { messageData } from "../context";
 import {signIn} from 'next-auth/react';
 
 const Home = ()=>{
-    const context = useContext(messageData);
-    const { theme, setTheme } = context!;
+    const {theme, setTheme} = useContext(messageData)!;
+    setTheme(localStorage.getItem('theme')=='dark'?true:false);
     const handleSubmit = ()=>{
       signIn("google");
     }
