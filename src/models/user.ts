@@ -1,5 +1,6 @@
-import { timeStamp } from 'console';
-import { Schema, model } from 'mongoose';
+// import { timeStamp } from 'console';
+// import { Schema, model } from 'mongoose';
+import mongoose, { Document, Model } from "mongoose";
 
 interface ISession{
   topic: string;
@@ -12,13 +13,13 @@ interface ISession{
 interface IUser {
   name: string;
   email: string;
-  avatar?: string;
+  image?: string;
   history?: ISession[];
 }
 
 // 2. Create a Schema corresponding to the document interface.
 
-const quizSession = new Schema<ISession>({
+const quizSession = new mongoose.Schema<ISession>({
   topic: { type: String, required: true },
   numberOfQuestions: { type: Number, required: true },
   type: { type: String, required: true, enum: ['mcq', 'open_ended']},
@@ -27,12 +28,12 @@ const quizSession = new Schema<ISession>({
 }, {timestamps:true});
 
 
-const userSchema = new Schema<IUser>({
+const userSchema = new mongoose.Schema<IUser>({
   name: { type: String, required: true },
   email: { type: String, required: true },
-  avatar: String,
+  image: String,
   history: [quizSession]
 },{timestamps:true});
 // 3. Create a Model.
-export const User = model<IUser>('User', userSchema);
-export const Question = model<ISession>('Session', quizSession);
+export const User: Model<IUser> =  mongoose.models?.User || mongoose.model('User', userSchema);
+export const Question: Model<ISession> = mongoose.models?.User || mongoose.model('Session', quizSession);

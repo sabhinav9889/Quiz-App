@@ -6,11 +6,11 @@ import RecentQuiz from "@/components/Dashboard/RecentQuiz";
 import { useContext } from "react";
 import { useRouter } from "next/navigation";
 import {data} from '../constant';
-import  {setTheme1, toggleTheme} from '@/lib/theme';
 import Nav from "../nav/Nav";
 const Dashboard = ()=>{
     const {theme, setTheme} = useContext(messageData)!;
-    setTheme(localStorage.getItem('theme')=='dark'?true:false);
+    const temp = localStorage.getItem('theme')=='dark'?true:false;
+    setTheme(temp);
     const router = useRouter();
       type Props = {
         formattedTopics: { text: string; value: number }[];
@@ -19,7 +19,7 @@ const Dashboard = ()=>{
         router.push('/readyquiz');
       }
     return(
-        <div className={`${theme?'bg-blackBg text-white':'bg-white text-black'} min-h-screen w-full`}>
+        <div className={`${theme?'bg-blackBg text-white':'bg-white text-black'} min-h-screen w-full select-none`}>
             <Nav isLoginPage={false}/>
             <h1 className="text-xl lg:text-3xl mt-6 font-bold pl-8 pr-8">DashBoard</h1>    
             <div className="flex justify-center w-full pl-8 pr-8">

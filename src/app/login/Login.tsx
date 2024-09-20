@@ -15,7 +15,7 @@ const Home = ()=>{
       signIn("google");
     }
     return(
-        <div className={`${theme?'bg-blackBg text-white':'bg-white text-black'} min-h-screen`}>
+        <div className={`${theme?'bg-blackBg text-white':'bg-white text-black'} min-h-screen select-none`}>
          <Nav isLoginPage={true}/>
          <div className="w-full flex justify-center p-8">
             <h1 className="lg:text-5xl md:text-3xl">Welcome to {appName}</h1>
