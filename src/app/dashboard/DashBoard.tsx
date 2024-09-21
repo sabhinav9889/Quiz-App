@@ -9,13 +9,13 @@ import {data} from '../constant';
 import Nav from "../nav/Nav";
 const Dashboard = ()=>{
     const {theme, setTheme} = useContext(messageData)!;
-    const temp = localStorage.getItem('theme')=='dark'?true:false;
-    setTheme(temp);
     const router = useRouter();
       type Props = {
         formattedTopics: { text: string; value: number }[];
       };
       const handleNewQuiz = ()=>{
+        const temp = localStorage.getItem('theme')=='dark'?true:false;
+        setTheme(temp);
         router.push('/readyquiz');
       }
     return(

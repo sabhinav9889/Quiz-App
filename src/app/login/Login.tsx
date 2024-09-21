@@ -10,8 +10,9 @@ import {signIn} from 'next-auth/react';
 
 const Home = ()=>{
     const {theme, setTheme} = useContext(messageData)!;
-    setTheme(localStorage.getItem('theme')=='dark'?true:false);
     const handleSubmit = ()=>{
+      const temp = localStorage.getItem('theme')=='dark'?true:false;
+      setTheme(temp);
       signIn("google");
     }
     return(

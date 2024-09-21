@@ -3,21 +3,25 @@ import { useContext, useState } from "react";
 import { messageData } from "../context";
 import { Button } from "@/components/ui/button";
 import Nav from '../nav/Nav';
+import axios, {AxiosError} from "axios";
 export default function Quiz(){
   const {theme,setTheme} = useContext(messageData)!;
-  setTheme(localStorage.getItem('theme')=='dark'?true:false);
   const [tab, setTab] = useState(true);
   const [topic, setTopic] = useState("");
   const [ques, setQues] = useState("");
-  const handleSubmit = ()=>{
+  const handleSubmit = async(e: any)=>{
     // handle submit logic here
-    localStorage.setItem('theme',(theme)?'dark':'light');
+    e.preventDefault(); // Prevent the default form submit behavior (page reload)
+    const temp = localStorage.getItem('theme')=='dark'?true:false;
+    setTheme(temp);
     const quesData = {
       topic: topic,
       numberOfQuestions: ques,
-      type: (tab)?'MCQ':'Open Read',
+      type: (tab)?'MCQ':'Open Ended',
       score: 0
     }
+    console.log("questionData", quesData);
+    const response = await axios.post("http://localhost:3000/api/getNewQuiz", quesData);
   }
   return(
     <div className={`${theme?'bg-blackBg text-white':'bg-white text-black'} min-h-screen`}>
