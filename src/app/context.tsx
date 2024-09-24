@@ -8,12 +8,27 @@ interface ques {
     type: String;
     score: Number;
 }
+
+interface questionI{
+    question: string;
+    answer: string;
+    options: string[];
+}
+
 interface ValueProps{
     theme: boolean;
     setTheme: Dispatch<SetStateAction<boolean>>;
     newQuiz: ques ;
     setnewQuiz: Dispatch<SetStateAction<ques>>;
+    questionSet: questionI[];
+    setQuestionSet: Dispatch<SetStateAction<questionI[]>>;
+    cursor: number;
+    setCursor: Dispatch<SetStateAction<number>>;
+    ans: number [];
+    setAns: Dispatch<SetStateAction<number[]>>;
 }
+
+
 
 const Context: React.FC<{children: ReactNode}> = ({children}) => {
     const [theme, setTheme] = useState<boolean>(false);
@@ -23,7 +38,14 @@ const Context: React.FC<{children: ReactNode}> = ({children}) => {
         type: '',
         score: 0,
     });
-    const value1 : ValueProps = { theme, setTheme, newQuiz, setnewQuiz};
+    const [cursor, setCursor] = useState<number>(0);
+    const [questionSet, setQuestionSet] = useState<questionI[]>([{
+        question: '',
+        answer: '',
+        options: [],
+    }]);
+    const [ans, setAns] = useState<number[]>(new Array(20).fill(-1));
+    const value1 : ValueProps = { theme, setTheme, newQuiz, setnewQuiz, questionSet, setQuestionSet, cursor, setCursor, ans, setAns};
     return(
         <messageData.Provider value={value1}>
             {children}

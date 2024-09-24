@@ -1,5 +1,7 @@
 export async function strict_output(topic:any) {
-  let ans ;
+  let ans = {
+    choices: "none"
+  };
   const data = await fetch("https://proxy.tune.app/chat/completions", {
     method: "POST",
     headers: {
@@ -17,9 +19,8 @@ export async function strict_output(topic:any) {
       model: "openai/gpt-4o",
       stream: false,
       "frequency_penalty":  0.2,
-      "max_tokens": 100
+      "max_tokens": 2000
     })
   }).then((res)=>res.json()).then((data)=>ans=data);
-  console.log("data beta ",ans.choices);
   return ans;
 }

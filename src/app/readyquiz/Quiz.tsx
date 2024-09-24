@@ -4,11 +4,15 @@ import { messageData } from "../context";
 import { Button } from "@/components/ui/button";
 import Nav from '../nav/Nav';
 import axios, {AxiosError} from "axios";
+import { useRouter } from "next/navigation";
+import { data } from "../constant";
 export default function Quiz(){
-  const {theme,setTheme} = useContext(messageData)!;
+  const {theme,setTheme, questionSet, setQuestionSet} = useContext(messageData)!;
   const [tab, setTab] = useState(true);
   const [topic, setTopic] = useState("");
   const [ques, setQues] = useState("");
+  const [response, setResponse] = useState(null);
+  const router  = useRouter();
   const handleSubmit = async(e: any)=>{
     // handle submit logic here
     e.preventDefault(); // Prevent the default form submit behavior (page reload)
@@ -20,13 +24,15 @@ export default function Quiz(){
       type: (tab)?'MCQ':'Open Ended',
       score: 0
     }
-    console.log("questionData", quesData);
-    const response = await axios.post("http://localhost:3000/api/getNewQuiz", quesData);
+    const res = await axios.post("http://localhost:3000/api/getNewQuiz", quesData);
+    console.log("questions: ",res.data);
+    if(ques){ setQuestionSet(res.data); router.push('/question')}
+    // setResponse(res.data);
   }
   return(
     <div className={`${theme?'bg-blackBg text-white':'bg-white text-black'} min-h-screen`}>
       <Nav isLoginPage={false}/> 
-     <form onSubmit={handleSubmit}>
+    {(!response)? <form onSubmit={handleSubmit}>
       <div className={`sm:pr-14 sm:pl-14 pr-4 pl-4 mt-14 border xl:mr-80 xl:ml-80 rounded-lg md:ml-40 md:mr-40 sm:ml-20 sm:mr-20 ml-3 mr-3 hover:shadow-lg ${theme?'hover:shadow-destructive':''} shadow-sm`}>
           <div className={`w-full rounded-md`}> 
             <p className="w-full flex justify-center mt-4 p-4 font-bold text-lg">Quizify</p>
@@ -48,7 +54,7 @@ export default function Quiz(){
             </div>
           </div>
       </div>
-     </form>
+     </form>:<>{response}</>}
     </div>
   )
 }
