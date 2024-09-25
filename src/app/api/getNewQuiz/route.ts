@@ -22,6 +22,7 @@ export async function POST(req:NextRequest){
         }
         while(i<res.length) temp += res[i++];
         const result = temp.replaceAll('`','').substring(5, temp.length);
+        console.log("Result array: ", result);
         return new NextResponse (result);
     }
     catch(e){

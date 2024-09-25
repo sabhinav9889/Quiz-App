@@ -18,15 +18,17 @@ export default function Quiz(){
     e.preventDefault(); // Prevent the default form submit behavior (page reload)
     const temp = localStorage.getItem('theme')=='dark'?true:false;
     setTheme(temp);
+    if(Number(ques)<1) return;
     const quesData = {
       topic: topic,
       numberOfQuestions: ques,
       type: (tab)?'MCQ':'Open Ended',
       score: 0
     }
-    const res = await axios.post("http://localhost:3000/api/getNewQuiz", quesData);
-    console.log("questions: ",res.data);
-    if(ques){ setQuestionSet(res.data); router.push('/question')}
+    if(ques){ 
+      const res = await axios.post("http://localhost:3000/api/getNewQuiz", quesData);
+      setQuestionSet(res.data); router.push('/question')
+    }
     // setResponse(res.data);
   }
   return(

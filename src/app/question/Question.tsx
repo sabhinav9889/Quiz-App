@@ -13,7 +13,8 @@ interface questionSet{
 export default function Question({question, len}:any){
     const {theme,setTheme, questionSet, cursor, setCursor, ans, setAns} = useContext(messageData)!;
     const router = useRouter();
-    if(questionSet[0].question.length===0) redirect('/readyquiz');
+    if(questionSet.length==0||!questionSet[0].question||questionSet[0].question.length===0) redirect('/readyquiz');
+    console.log(questionSet);
     const lis: string[] = ["Option A", "Option B", "Option C", "Option D"];
     const opt: string[] = ["A", "B", "C", "D"];
     const [score, setScore] = useState(0);
@@ -42,6 +43,8 @@ export default function Question({question, len}:any){
         setHideScore(true);
     }
     const handleNewQuiz = ()=>{
+        handleRetry();
+        router.push('/readyquiz');
         redirect('/readyquiz');
     }
     return(

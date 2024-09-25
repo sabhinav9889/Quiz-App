@@ -18,8 +18,8 @@ export async function strict_output(topic:any) {
       ],
       model: "openai/gpt-4o",
       stream: false,
-      "frequency_penalty":  0.2,
-      "max_tokens": 2000
+      "frequency_penalty":  0,
+      "max_tokens": 4000
     })
   }).then((res)=>res.json()).then((data)=>ans=data);
   return ans;

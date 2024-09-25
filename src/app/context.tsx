@@ -44,7 +44,7 @@ const Context: React.FC<{children: ReactNode}> = ({children}) => {
         answer: '',
         options: [],
     }]);
-    const [ans, setAns] = useState<number[]>(new Array(20).fill(-1));
+    const [ans, setAns] = useState<number[]>(new Array(21).fill(-1));
     const value1 : ValueProps = { theme, setTheme, newQuiz, setnewQuiz, questionSet, setQuestionSet, cursor, setCursor, ans, setAns};
     return(
         <messageData.Provider value={value1}>
