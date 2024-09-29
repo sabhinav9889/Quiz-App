@@ -2,6 +2,7 @@ import run from "@/lib/dbConnect";
 import { NextRequest, NextResponse } from "next/server";
 import {User, Question} from '@/models/user';
 import { getUserDetails } from "@/lib/nextAuth";
+import { error } from "console";
 
 export async function GET() {
     try{
@@ -10,11 +11,7 @@ export async function GET() {
     }
     catch(e){
         console.log(e);
-        NextResponse.json({
-            message: "Connection failed"
-        },{
-            status:500
-        })
+        return NextResponse.json({ error: 'Connection failed' }, { status: 500 })
     }
 }   
 
@@ -25,17 +22,17 @@ export async function POST(req: NextRequest) {
         const {newUser} = postData;
         if(!newUser){
             return NextResponse.json({
-                message: "User not found",
+                error: "Bad request",
             },{
-                status:404
+                status:400
             });
         }
         const existingUser = await User.findOne(newUser);
         if(existingUser){
             return NextResponse.json({
-                message: "User Exists",
+                error: "Conflict",
             },{
-                status:201
+                status: 409
             });
         }
         await  User.create(newUser);
@@ -47,5 +44,6 @@ export async function POST(req: NextRequest) {
     }
     catch(e){
         console.log(e);
+        return NextResponse.json({ error: 'Internal Server error' }, { status: 500 });
     }
 }

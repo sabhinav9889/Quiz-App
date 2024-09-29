@@ -17,7 +17,7 @@ export default async function POST(req:NextRequest){
         console.log(e);
         NextResponse.json({
             status: 500,
-            message: "An error occurred"
+            error: "An error occurred"
         });
     }
 }

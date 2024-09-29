@@ -10,6 +10,7 @@ import  {setTheme1, toggleTheme} from '@/lib/theme';
 export default function({isLoginPage}:any){
     const {theme, setTheme} = useContext(messageData)!;
     const Logout = ()=>{
+        alert("ouT");
         signOut();
         redirect('/login');
     }

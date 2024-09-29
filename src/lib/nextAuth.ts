@@ -12,9 +12,11 @@ export const authConfig: NextAuthOptions = {
     ]
 }
 
+export var currUser:any;
+
 export async function loginIsRequired() {
-    const session = await getServerSession(authConfig); 
-    console.log("session:",session?.user); 
+    const session = await getServerSession(authConfig);
+    if(session?.user) currUser = session?.user;
     if(!session) redirect('/login');
 }
 

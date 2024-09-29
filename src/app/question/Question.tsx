@@ -4,6 +4,9 @@ import { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";  
 import { useRouter, redirect } from "next/navigation";
+// import { currUser } from "@/lib/nextAuth";
+import { getUserDetails, currUser } from "@/lib/nextAuth";
+import axios from "axios";
 interface questionSet{
     question: string;
     answer: string;
@@ -11,11 +14,8 @@ interface questionSet{
     len: number;
 }
 export default function Question({question, len}:any){
-    const {theme,setTheme, questionSet, cursor, setCursor, ans, setAns} = useContext(messageData)!;
+    const {theme, setTheme,  cursor, setCursor, newQuiz, ans, setAns} = useContext(messageData)!;
     const router = useRouter();
-    if(questionSet.length==0||!questionSet[0].question||questionSet[0].question.length===0) redirect('/readyquiz');
-    console.log(questionSet);
-    const lis: string[] = ["Option A", "Option B", "Option C", "Option D"];
     const opt: string[] = ["A", "B", "C", "D"];
     const [score, setScore] = useState(0);
     const [hideScore, setHideScore] = useState(true);
@@ -30,11 +30,23 @@ export default function Question({question, len}:any){
         if(temp1[cursor]!=-1) return;
         temp1[cursor] = i;
         setAns(temp1);
-        if(question.options[i]==question.answer) setScore((prev)=>prev+1);
+        if(question?.options[i]==question?.answer) setScore((prev)=>prev+1);
         else setScore(score);
     }
-    const handleSubmit = ()=>{
-        setHideScore(false);
+    const handleSubmit = async()=>{
+        // api call to save the result
+        try{
+            setHideScore(false);
+            alert(currUser);
+            // const temp = await getUserDetails();
+            const data = {
+                ...newQuiz
+            }
+            const res = await axios.post('/api/saveresult',data);
+            console.log(res);
+        }catch(e){
+            console.log(e);
+        }
     }
     const handleRetry = ()=>{
         setAns(ans.fill(-1));
@@ -42,7 +54,7 @@ export default function Question({question, len}:any){
         setCursor(0);
         setHideScore(true);
     }
-    const handleNewQuiz = ()=>{
+    const handleNewQuiz = () =>{
         handleRetry();
         router.push('/readyquiz');
         redirect('/readyquiz');
@@ -59,10 +71,10 @@ export default function Question({question, len}:any){
          </div>
          {(hideScore)?
          <div className={`h-[500px] sm:pr-14 sm:pl-14 pr-4 pl-4 mt-10 border xl:mr-80 xl:ml-80 rounded-lg md:ml-40 md:mr-40 sm:ml-20 sm:mr-20 ml-3 mr-3 hover:shadow-lg ${theme?'hover:shadow-destructive':''} font-bold`}>
-            <p className="pt-2 text-xl leading-loose">{question.question}</p>
+            <p className="pt-2 text-xl leading-loose">{question?.question}</p>
             <div className="mt-4 h-[250px]">
                 {
-                    question.options.map((ele:any,i:any)=>(
+                    question?.options?.map((ele:any,i:any)=>(
                         <div key={i} className={`w-full rounded-xl border p-2 mt-4 cursor-pointer hover:shadow-md ${(ans[cursor]!=-1)?`bg-destructive`:''} ${(question.options[i]==question.answer&&ans[cursor]!=-1)?`bg-green-300`:''}`} onClick={()=>handleClick(i)}>{opt[i]+". "+ele}</div>
                     ))
                 }

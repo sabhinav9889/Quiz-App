@@ -9,6 +9,9 @@ export async function POST(req:NextRequest){
         } 
         let questions:any;
         let lis: Object[] =  new Array();
+        if(Number(numberOfQuestions)<=0){
+            throw new Error("Total number of questions is atleast one");
+        }
         let promt = `You are an AI assistant capable of generating multiple-choice questions (MCQs) along with answers and options in JSON format. The questions should be related to the topic ${topic}. Each answer should not exceed 15 words in length. The total number of questions should equal ${numberOfQuestions}. The JSON array should include the following structure for each question:
                question: 'The question text'
                options: ['Option 1', 'Option 2', 'Option 3', 'Option 4']
@@ -22,11 +25,10 @@ export async function POST(req:NextRequest){
         }
         while(i<res.length) temp += res[i++];
         const result = temp.replaceAll('`','').substring(5, temp.length);
-        console.log("Result array: ", result);
         return new NextResponse (result);
     }
-    catch(e){
+    catch(e:any){
         console.log(e);
-        return new NextResponse("Error processing request", {status: 500}); 
+        return NextResponse.json({error:e}, {status: 500});
     }
 }

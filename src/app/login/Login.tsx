@@ -7,13 +7,16 @@ import Nav from "../nav/Nav";
 import React from "react";
 import { messageData } from "../context";
 import {signIn} from 'next-auth/react';
+import { useEffect } from "react";
 
 const Home = ()=>{
     const {theme, setTheme} = useContext(messageData)!;
-    const handleSubmit = ()=>{
-      const temp = localStorage.getItem('theme')=='dark'?true:false;
-      setTheme(temp);
-      signIn("google");
+    useEffect(() => {
+      const storedTheme = localStorage.getItem('theme') === 'dark';
+      setTheme(storedTheme);
+    }, [setTheme]);
+    const handleSubmit = async()=>{
+      await signIn("google");
     }
     return(
         <div className={`${theme?'bg-blackBg text-white':'bg-white text-black'} min-h-screen select-none`}>

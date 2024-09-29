@@ -1,23 +1,22 @@
 "use client"
+import { useContext, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { messageData } from "../context";
 import History from "@/components/Dashboard/DownCards";
 import NewQuiz from "@/components/Dashboard/NewQuiz";
 import RecentQuiz from "@/components/Dashboard/RecentQuiz";
-import { useContext } from "react";
-import { useRouter } from "next/navigation";
 import {data} from '../constant';
 import Nav from "../nav/Nav";
 const Dashboard = ()=>{
     const {theme, setTheme} = useContext(messageData)!;
     const router = useRouter();
-      type Props = {
-        formattedTopics: { text: string; value: number }[];
-      };
-      const handleNewQuiz = ()=>{
-        const temp = localStorage.getItem('theme')=='dark'?true:false;
-        setTheme(temp);
-        router.push('/readyquiz');
-      }
+    const handleNewQuiz = ()=>{
+      router.push('/readyquiz');
+    }
+    useEffect(() => {
+      const storedTheme = localStorage.getItem('theme') === 'dark';
+      setTheme(storedTheme);
+    }, [setTheme]);
     return(
         <div className={`${theme?'bg-blackBg text-white':'bg-white text-black'} min-h-screen w-full select-none`}>
             <Nav isLoginPage={false}/>
