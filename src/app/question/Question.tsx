@@ -61,7 +61,12 @@ export default function Question({question, len}:any){
     }
     return(
          <>
-         <div className="mt-8 xl:mr-80 xl:ml-80 md:ml-40 md:mr-40 sm:ml-20 sm:mr-20 ml-3 mr-3 flex justify-between select-none">
+         <div className="xl:mr-80 xl:ml-80 md:ml-40 md:mr-40 sm:ml-20 sm:mr-20 ml-3 mr-3 flex justify-center select-none">
+            <div className={`text-2xl font-semibold text-center p-2`}>
+               {newQuiz.topic}
+            </div>
+         </div>
+         <div className="xl:mr-80 xl:ml-80 md:ml-40 md:mr-40 sm:ml-20 sm:mr-20 ml-3 mr-3 flex justify-between select-none">
             <div className={`w-24 text-center rounded-md p-2 border ${(!theme)?'bg-white text-primary hover:shadow-destructive':'bg-primary text-secondary'}`}>
                {isMcq?'MCQ':'Open Read'}
             </div>
